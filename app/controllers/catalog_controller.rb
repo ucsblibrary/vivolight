@@ -1,51 +1,32 @@
 # frozen_string_literal: true
 class CatalogController < ApplicationController
-
   include Blacklight::Catalog
   include Blacklight::Marc::Catalog
 
-
   configure_blacklight do |config|
-    ## Class for sending and receiving requests from a search index
-    # config.repository_class = Blacklight::Solr::Repository
-    #
-    ## Class for converting Blacklight's url parameters to into request parameters for the search index
-    # config.search_builder_class = ::SearchBuilder
-    #
-    ## Model that maps search index responses to the blacklight response model
-    # config.response_model = Blacklight::Solr::Response
-
-    ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
+    # Default parameters to send to solr for all search-like
+    # requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = {
       rows: 10
     }
 
-    # solr path which will be added to solr base url before the other solr params.
-    #config.solr_path = 'select'
-
-    # items to show per page, each number in the array represent another option to choose from.
-    #config.per_page = [10,20,50,100]
-
-    ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SearchHelper#solr_doc_params) or
-    ## parameters included in the Blacklight-jetty document requestHandler.
-    #
-    #config.default_document_solr_params = {
-    #  qt: 'document',
-    #  ## These are hard-coded in the blacklight 'document' requestHandler
-    #  # fl: '*',
-    #  # rows: 1,
-    #  # q: '{!term f=id v=$id}'
-    #}
+    # Default parameters to send on single-document requests to
+    # Solr. These settings are the Blackligt defaults (see
+    # SearchHelper#solr_doc_params) or parameters included in the
+    # Blacklight-jetty document requestHandler.
+    config.default_document_solr_params = {
+      qt: 'search'
+    }
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'nameRaw'
-    config.index.display_type_field = 'mostSpecificTypeURIs'
-    #config.index.thumbnail_field = 'thumbnail_path_ss'
+    config.index.title_field = 'name'
+    config.index.display_type_field = 'type'
+    config.index.thumbnail_field = 'THUMBNAIL_URL'
 
     # solr field configuration for document/show views
-    #config.show.title_field = 'title_display'
-    #config.show.display_type_field = 'format'
-    #config.show.thumbnail_field = 'thumbnail_path_ss'
+    config.show.title_field = 'name'
+    config.show.display_type_field = 'type'
+    config.show.thumbnail_field = 'THUMBNAIL_URL'
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -67,25 +48,14 @@ class CatalogController < ApplicationController
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
     #
-    # set :index_range to true if you want the facet pagination view to have facet prefix-based navigation
-    #  (useful when user clicks "more" on a large facet and wants to navigate alphabetically across a large set of results)
-    # :index_range can be an array or range of prefixes that will be used to create the navigation (note: It is case sensitive when searching values)
+    # set :index_range to true if you want the facet pagination view
+    #  to have facet prefix-based navigation (useful when user clicks
+    #  "more" on a large facet and wants to navigate alphabetically
+    #  across a large set of results) :index_range can be an array or
+    #  range of prefixes that will be used to create the navigation
+    #  (note: It is case sensitive when searching values)
 
-    config.add_facet_field 'mostSpecificTypeURIs', label: 'Type'
-    # config.add_facet_field 'pub_date', label: 'Publication Year', single: true
-    # config.add_facet_field 'subject_topic_facet', label: 'Topic', limit: 20, index_range: 'A'..'Z'
-    # config.add_facet_field 'language_facet', label: 'Language', limit: true
-    # config.add_facet_field 'lc_1letter_facet', label: 'Call Number'
-    # config.add_facet_field 'subject_geo_facet', label: 'Region'
-    # config.add_facet_field 'subject_era_facet', label: 'Era'
-
-    # config.add_facet_field 'example_pivot_field', label: 'Pivot Field', :pivot => ['format', 'language_facet']
-
-    # config.add_facet_field 'example_query_facet_field', label: 'Publish Date', :query => {
-    #    :years_5 => { label: 'within 5 Years', fq: "pub_date:[#{Time.zone.now.year - 5 } TO *]" },
-    #    :years_10 => { label: 'within 10 Years', fq: "pub_date:[#{Time.zone.now.year - 10 } TO *]" },
-    #    :years_25 => { label: 'within 25 Years', fq: "pub_date:[#{Time.zone.now.year - 25 } TO *]" }
-    # }
+    config.add_facet_field 'type', label: 'Type'
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -94,36 +64,13 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field 'nameRaw', label: 'Title'
-    config.add_index_field 'mostSpecificTypeURIs', label: 'Type'
-
-    # config.add_index_field 'title_vern_display', label: 'Title'
-    # config.add_index_field 'author_display', label: 'Author'
-    # config.add_index_field 'author_vern_display', label: 'Author'
-    # config.add_index_field 'format', label: 'Format'
-    # config.add_index_field 'language_facet', label: 'Language'
-    # config.add_index_field 'published_display', label: 'Published'
-    # config.add_index_field 'published_vern_display', label: 'Published'
-    # config.add_index_field 'lc_callnum_display', label: 'Call number'
+    config.add_index_field 'name', label: 'Title'
+    config.add_index_field 'type', label: 'Type'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field 'nameRaw', label: 'Title'
-    config.add_show_field 'mostSpecificTypeURIs', label: 'Type'
-
-    # config.add_show_field 'title_vern_display', label: 'Title'
-    # config.add_show_field 'subtitle_display', label: 'Subtitle'
-    # config.add_show_field 'subtitle_vern_display', label: 'Subtitle'
-    # config.add_show_field 'author_display', label: 'Author'
-    # config.add_show_field 'author_vern_display', label: 'Author'
-    # config.add_show_field 'format', label: 'Format'
-    # config.add_show_field 'url_fulltext_display', label: 'URL'
-    # config.add_show_field 'url_suppl_display', label: 'More Information'
-    # config.add_show_field 'language_facet', label: 'Language'
-    # config.add_show_field 'published_display', label: 'Published'
-    # config.add_show_field 'published_vern_display', label: 'Published'
-    # config.add_show_field 'lc_callnum_display', label: 'Call number'
-    # config.add_show_field 'isbn_t', label: 'ISBN'
+    config.add_show_field 'name', label: 'Title'
+    config.add_show_field 'type', label: 'Type'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -139,45 +86,7 @@ class CatalogController < ApplicationController
     # urls.  A display label will be automatically calculated from the :key,
     # or can be specified manually to be different.
 
-    # This one uses all the defaults set by the solr request
-    # handler. Which solr request handler? The one set in
-    # config[:default_solr_parameters][:qt], since we aren't
-    # specifying it otherwise.
-
-    config.add_search_field 'nameRaw', label: 'Title'
-
-    # Now we see how to over-ride Solr request handler defaults, in this
-    # case for a BL "search field", which is really a dismax aggregate
-    # of Solr search fields.
-
-    # config.add_search_field('title') do |field|
-    #   # solr_parameters hash are sent to Solr as ordinary url query params.
-    #   field.solr_parameters = {
-    #     'spellcheck.dictionary': 'title',
-    #     qf: '${title_qf}',
-    #     pf: '${title_pf}'
-    #   }
-    # end
-
-    # config.add_search_field('author') do |field|
-    #   field.solr_parameters = {
-    #     'spellcheck.dictionary': 'author',
-    #     qf: '${author_qf}',
-    #     pf: '${author_pf}'
-    #   }
-    # end
-
-    # Specifying a :qt only to show it's possible, and so our internal automated
-    # tests can test it. In this case it's the same as
-    # config[:default_solr_parameters][:qt], so isn't actually neccesary.
-    # config.add_search_field('subject') do |field|
-    #   field.qt = 'search'
-    #   field.solr_parameters = {
-    #     'spellcheck.dictionary': 'subject',
-    #     qf: '${subject_qf}',
-    #     pf: '${subject_pf}'
-    #   }
-    # end
+    config.add_search_field 'name', label: 'Title'
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
