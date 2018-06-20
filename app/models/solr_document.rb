@@ -10,12 +10,12 @@ class SolrDocument
     document.key?(:marc_display)
   end
 
-  field_semantics.merge!(
-    title: 'title_display',
-    author: 'author_display',
-    language: 'language_facet',
-    format: 'format'
-  )
+  # field_semantics.merge!(
+  #   title: 'nameDisplay',
+  #   # author: 'author_display',
+  #   # language: 'language_facet',
+  #   format: 'typeDisplay'
+  # )
 
   self.unique_key = 'DocId'
 
