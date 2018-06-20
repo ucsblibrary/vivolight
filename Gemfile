@@ -25,6 +25,8 @@ gem 'uglifier', '>= 1.3.0'
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara', '~> 2.13'
+  gem 'method_source'
+  gem 'pry'
   gem 'selenium-webdriver'
   gem 'solr_wrapper', '>= 0.3'
 end
