@@ -27,6 +27,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'method_source'
   gem 'pry'
+  gem 'pry-doc'
   gem 'selenium-webdriver'
   gem 'solr_wrapper', '>= 0.3'
 end

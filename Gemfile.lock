@@ -150,6 +150,9 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-doc (0.13.4)
+      pry (~> 0.11)
+      yard (~> 0.9.11)
     public_suffix (3.0.2)
     puma (3.11.4)
     rack (2.0.5)
@@ -238,7 +241,7 @@ GEM
       railties (>= 3.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.11)
+    uglifier (4.1.12)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
@@ -250,6 +253,7 @@ GEM
     websocket-extensions (0.1.3)
     xpath (3.1.0)
       nokogiri (~> 1.8)
+    yard (0.9.14)
     yell (2.0.7)
 
 PLATFORMS
@@ -267,6 +271,7 @@ DEPENDENCIES
   jquery-rails
   method_source
   pry
+  pry-doc
   puma (~> 3.7)
   rails (~> 5.1.6)
   rsolr (>= 1.0)
