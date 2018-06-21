@@ -16,7 +16,8 @@ class CatalogController < ApplicationController
     # SearchHelper#solr_doc_params) or parameters included in the
     # Blacklight-jetty document requestHandler.
     config.default_document_solr_params = {
-      qt: 'search'
+      qt: 'search',
+      q: '{!term f=DocId v=$id}'
     }
 
     # solr field configuration for search results/index views
@@ -55,7 +56,6 @@ class CatalogController < ApplicationController
     #  across a large set of results) :index_range can be an array or
     #  range of prefixes that will be used to create the navigation
     #  (note: It is case sensitive when searching values)
-
     config.add_facet_field 'typeDisplay', label: 'Type'
 
     # Have BL send all facet field names to Solr, which has been the default
@@ -86,7 +86,6 @@ class CatalogController < ApplicationController
     # as well as in URLs -- so changing it after deployment may break bookmarked
     # urls.  A display label will be automatically calculated from the :key,
     # or can be specified manually to be different.
-
     config.add_search_field 'nameDisplay', label: 'Title'
 
     # "sort results by" select (pulldown)
@@ -97,5 +96,12 @@ class CatalogController < ApplicationController
     # config.add_sort_field 'pub_date_sort desc, title_sort asc', label: 'year'
     # config.add_sort_field 'author_sort asc, title_sort asc', label: 'author'
     # config.add_sort_field 'title_sort asc, pub_date_sort desc', label: 'title'
+  end
+
+  def show
+    # Rails filters the parameters and turns http:// into http:/
+    params[:id] = params[:id].sub(':/', '://')
+
+    super
   end
 end
