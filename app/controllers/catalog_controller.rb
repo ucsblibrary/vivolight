@@ -124,7 +124,7 @@ class CatalogController < ApplicationController
 
   def show
     # Rails filters the parameters and turns http:// into http:/
-    params[:id] = params[:id].sub(':/', '://')
+    params[:id].sub!(':/', '://')
 
     super
   end
