@@ -4,7 +4,31 @@ class CatalogController < ApplicationController
   include Blacklight::Catalog
   include Blacklight::Marc::Catalog
 
+  # Turn off SMS
+  # https://groups.google.com/d/msg/blacklight-development/l_zHRF_GQc8/_qUUbJSs__YJ
+  CatalogController.blacklight_config.show.document_actions.delete(:sms)
+
+  # TODO: re-implement this functionality
+  # https://github.library.ucsb.edu/ADRL/alexandria/pull/29
+  # https://help.library.ucsb.edu/browse/DIGREPO-504
+  CatalogController.blacklight_config.show.document_actions.delete(:email)
+  CatalogController.blacklight_config.show.document_actions.delete(:citation)
+
   configure_blacklight do |config|
+    # This controls which partials are used, and in what order, for
+    # each record type.
+    #
+    # - _show_header_default.html.erb
+    # - _thumbnail_default.html.erb
+    # - _show_default.html.erb
+    #
+    # falling back to _title_default etc. in each case.
+    config.show.partials = %i[
+      show_header
+      media
+      show
+    ]
+
     # Default parameters to send to solr for all search-like
     # requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = {

@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+
+/* image thumbnails in search results */
+.document-thumbnail img {
+  width: 100px;
+}
+
+.document-media img {
+  width: 200px;
+  float: right;
+}

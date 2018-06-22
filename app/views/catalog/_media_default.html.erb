@@ -1,0 +1,5 @@
+<%- if has_thumbnail?(document) %>
+  <div class="document-media">
+    <%= render_thumbnail_tag(document, {}) %>
+  </div>
+<%- end %>
