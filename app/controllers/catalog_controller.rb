@@ -4,15 +4,9 @@ class CatalogController < ApplicationController
   include Blacklight::Catalog
   include Blacklight::Marc::Catalog
 
-  # Turn off SMS
-  # https://groups.google.com/d/msg/blacklight-development/l_zHRF_GQc8/_qUUbJSs__YJ
-  CatalogController.blacklight_config.show.document_actions.delete(:sms)
-
-  # TODO: re-implement this functionality
-  # https://github.library.ucsb.edu/ADRL/alexandria/pull/29
-  # https://help.library.ucsb.edu/browse/DIGREPO-504
-  CatalogController.blacklight_config.show.document_actions.delete(:email)
-  CatalogController.blacklight_config.show.document_actions.delete(:citation)
+  %i[sms email citation bookmark].each do |tool|
+    CatalogController.blacklight_config.show.document_actions.delete(tool)
+  end
 
   configure_blacklight do |config|
     # This controls which partials are used, and in what order, for
