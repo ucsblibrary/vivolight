@@ -39,13 +39,13 @@ class CatalogController < ApplicationController
     }
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'nameDisplay'
-    config.index.display_type_field = 'typeDisplay'
+    config.index.title_field = 'name_label'
+    config.index.display_type_field = 'type_label'
     config.index.thumbnail_field = 'THUMBNAIL_URL'
 
     # solr field configuration for document/show views
-    # config.show.title_field = 'nameDisplay'
-    # config.show.display_type_field = 'typeDisplay'
+    # config.show.title_field = 'name_label'
+    # config.show.display_type_field = 'type_label'
     # config.show.thumbnail_field = 'THUMBNAIL_URL'
 
     # solr fields that will be treated as facets by the blacklight application
@@ -74,7 +74,7 @@ class CatalogController < ApplicationController
     #  across a large set of results) :index_range can be an array or
     #  range of prefixes that will be used to create the navigation
     #  (note: It is case sensitive when searching values)
-    config.add_facet_field 'typeDisplay', label: 'Type'
+    config.add_facet_field 'type_label', label: 'Type'
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -83,13 +83,13 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    # config.add_index_field 'nameDisplay', label: 'Title'
-    config.add_index_field 'typeDisplay', label: 'Type'
+    # config.add_index_field 'name_label', label: 'Title'
+    config.add_index_field 'type_label', label: 'Type'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field 'nameDisplay', label: 'Title'
-    config.add_show_field 'typeDisplay', label: 'Type'
+    config.add_show_field 'name_label', label: 'Title'
+    config.add_show_field 'type_label', label: 'Type'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -104,7 +104,7 @@ class CatalogController < ApplicationController
     # as well as in URLs -- so changing it after deployment may break bookmarked
     # urls.  A display label will be automatically calculated from the :key,
     # or can be specified manually to be different.
-    config.add_search_field 'nameDisplay', label: 'Title'
+    config.add_search_field 'name_label', label: 'Title'
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
