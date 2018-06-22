@@ -1,0 +1,6 @@
+<header>
+  <%= render_document_heading(document, :tag => :h1) %>
+  <% if document["PREFERRED_TITLE"].present? %>
+    <h2 class='preferred-title'><%= document["PREFERRED_TITLE"].first %></h2>
+  <% end %>
+</header>

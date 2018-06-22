@@ -18,8 +18,8 @@ class CatalogController < ApplicationController
     #
     # falling back to _title_default etc. in each case.
     config.show.partials = %i[
-      show_header
       media
+      header
       show
     ]
 
