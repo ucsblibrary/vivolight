@@ -1,3 +1,4 @@
+# coding: utf-8
 module ApplicationHelper
   def url_for_document(document, _params = {})
     if document.key? 'DocId'
@@ -27,8 +28,14 @@ module ApplicationHelper
       org = data[:document]["#{data[:field]}_org"][i]
       org_label = data[:document]["#{data[:field]}_org_label"][i]
 
+      start_year = data[:document]["#{data[:field]}_start_label"][i]
+      end_year = data[:document]["#{data[:field]}_end_label"][i]
+
       org_link = link_to(org_label, "/?f[position_org][]=#{org}")
-      content_tag(:li, "#{label} at #{org_link}".html_safe)
+      content_tag(
+        :li,
+        "#{label} at #{org_link} (#{start_year}–#{end_year})".html_safe
+      )
     end
 
     content_tag(:ul, safe_join(items))
