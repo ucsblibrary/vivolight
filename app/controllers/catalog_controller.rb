@@ -43,11 +43,6 @@ class CatalogController < ApplicationController
     config.index.display_type_field = 'type_label'
     config.index.thumbnail_field = 'THUMBNAIL_URL'
 
-    # solr field configuration for document/show views
-    # config.show.title_field = 'name_label'
-    # config.show.display_type_field = 'type_label'
-    # config.show.thumbnail_field = 'THUMBNAIL_URL'
-
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
     #
@@ -88,8 +83,14 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field 'name_label', label: 'Title'
     config.add_show_field 'type_label', label: 'Type'
+    config.add_show_field 'url',
+                          label: 'Website(s)',
+                          helper_method: :url_display
+
+    config.add_show_field 'position',
+                          label: 'Position(s)',
+                          helper_method: :position_display
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
