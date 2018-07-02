@@ -1,0 +1,1120 @@
+/*
+ *= require_self
+*/
+
+@mixin hide {
+  position: absolute;
+  left: -999em;
+  /* http://css-tricks.com/snippets/css/accessibilityseo-friendly-css-hiding/ */
+  top: -999px;
+}
+
+@mixin inline($separator, $distance) {
+  &, & > li {
+    /* http://www.alistapart.com/articles/taminglists/ */
+    display: inline;
+    margin: 0;
+    padding-left: 0;
+  }
+  & > li + li {
+    // old IE doesn't recognize ::before, so this keeps items at least a little separate
+    padding-left: $distance/2;
+    &::before {
+      font-style: normal;
+      content: $separator;
+      padding-right: $distance/2;
+    }
+  }
+}
+
+// These are the numbers used by Bootstrap
+$breakpoint1: 1200px;
+$breakpoint2: 992px;
+$breakpoint3: 768px;
+$breakpoint4: 480px;
+
+$welcome_blue: #004E6E;
+// picked up by CurationConcerns
+$blue: $welcome_blue;
+
+$primary_link_color: #ffcb05;
+$default_link_color: #fff;
+
+$bg_color: #0B1820;
+
+$top_margin: 20px;
+$inner_width: 70%;
+
+$logo_image: asset-path('ADRL_small.png');
+$bg_image: asset-path('ADRL_BG_1280x160.png');
+
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'blacklight/blacklight';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+
+// -------------------
+// Bootstrap overrides
+// -------------------
+.navbar-form {
+  padding: 0;
+  text-align: center;
+}
+
+.navbar-form .input-group > .form-control {
+  width: 50em;
+}
+
+@media screen and (max-width: $breakpoint1) {
+  .navbar-form .input-group > .form-control {
+    width: 30em;
+  }
+}
+@media screen and (max-width: $breakpoint3) {
+  .navbar-form .input-group > .form-control {
+    width: 100%;
+  }
+}
+
+// Prevent list item numbers from disappearing past the left edge of their containers
+@media screen and (max-width: $breakpoint2) {
+  .container-fluid {
+    padding-left: 40px;
+  }
+}
+
+.navbar {
+  border-radius: 0;
+}
+.navbar-nav,
+.nav {
+  & > li > a {
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.dl-horizontal dt {
+  width: initial;
+  text-overflow: inherit;
+  white-space: inherit;
+}
+
+li .row {
+  margin: initial;
+}
+.row:before, .row:after {
+  content: initial;
+  display: initial;
+}
+
+.alert {
+  margin: 0;
+  border-radius: 0;
+}
+
+.pager li > a,
+.pager li > span {
+  border-radius: 0;
+}
+
+// -------
+// General
+// -------
+
+body {
+  font-size: 12pt;
+}
+
+h1 {
+  font-size: 171.5%;
+}
+
+h2 {
+  font-size: 150%;
+}
+
+h3 {
+  font-size: 128.5%;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 114.3%;
+}
+
+h6 {
+  font-style: italic;
+}
+
+.invisible {
+  @include hide;
+}
+
+// --------
+// Homepage
+// --------
+
+// html and body both need height set
+html.welcome,
+.welcome body {
+  background-color: $bg_color;
+  height: 100%;
+
+  padding: 0;
+  margin: 0;
+}
+
+// <header class='splash'>
+.splash {
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #fff;
+  min-height: 100%;
+  padding: 1em;
+  text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+
+  a {
+    color: #fff;
+    text-decoration: underline;
+    transition: all 100ms ease-in-out 0s;
+  }
+  a:hover {
+    color: $primary_link_color;
+  }
+
+  .flex-inner {
+    text-align: center;
+    width: 100%;
+  }
+
+  section {
+    font-size: 150%;
+  }
+}
+
+@media screen and (max-width: $breakpoint1) {
+  .large-logo img {
+    width: 100%;
+  }
+}
+
+.background-metadata-title {
+  font-size: 114.3%;
+  margin-bottom: 0;
+}
+
+.menu ul {
+  @include inline("• ", 4px);
+  a {
+    color: #fff;
+  }
+}
+
+.background-metadata {
+  a {
+    text-decoration: underline;
+    font-style: normal;
+  }
+}
+
+@media screen and (min-width: $breakpoint2) {
+  .blurb {
+    padding-left: 30%;
+    padding-right: 30%;
+  }
+}
+
+@media screen and (min-width: $breakpoint3) {
+  .splash {
+    position: relative;
+  }
+
+  nav.menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    padding-right: 1em;
+    padding-top: 0;
+  }
+  .flex-outer {
+    align-items: center;
+    display: flex;
+    flex-flow: row wrap;
+    height: 100%;
+    justify-content: center;
+    min-height: 100%;
+    width: 100%;
+  }
+  .large-logo {
+    margin-top: 5em;
+    margin-bottom: 4em;
+    text-align: center;
+  }
+  #browse-by {
+    margin-bottom: 1.5em;
+  }
+  .blurb {
+    // to keep from covering the background-metadata
+    padding-bottom: 2em;
+  }
+  .background-metadata {
+    position: absolute;
+    bottom: 0;
+    left: 1em;
+  }
+}
+@media screen and (max-width: $breakpoint3) {
+  .large-logo {
+    margin-top: 15%;
+  }
+  .background-metadata {
+    @include hide;
+  }
+}
+
+#main-container {
+  overflow: hidden;
+  padding-bottom: 1em;
+}
+
+#main_header h2 {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: .5em;
+
+  text-align: center;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: $welcome_blue;
+  line-height: 1.2;
+}
+
+.welcome_inner {
+  width: 95%;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3em;
+  text-align: center;
+  font-weight: normal;
+}
+
+@media screen and (min-width: $breakpoint3) {
+  .welcome_inner,
+  #main_header h2 {
+    width: $inner_width;
+  }
+  #left_column {
+    width: 48%;
+    float: left;
+  }
+
+  #right_column {
+    width: 48%;
+    float: right;
+  }
+}
+
+#left_column,
+#right_column {
+  text-align: left;
+
+  h4 {
+    color: $welcome_blue;
+    font: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+
+  p {
+    text-align: left;
+    color: black;
+  }
+
+  a {
+    color: $welcome_blue;
+    text-decoration: none;
+  }
+}
+
+// -----------------------------
+//   The search bar
+// -----------------------------
+
+.for-search-field {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+// FIXME: less specificity
+#search_field {
+  display: block;
+  height: 34px;
+
+  border: 1px solid gray;
+  border-radius: 4px 0 0 4px;
+  font-size: 14px;
+}
+
+@media screen and (min-width: $breakpoint3) {
+  #search_field {
+    margin-right: 1em;
+  }
+}
+
+// -----
+// Forms
+// -----
+
+.date-editor .field-wrapper {
+  display: flex;
+  flex-flow: column;
+}
+
+ul.listing {
+  display: block;
+  list-style: none;
+
+  .row {
+    display: block;
+  }
+}
+
+.help {
+  color: #696969;
+}
+
+@media screen and (min-width: $breakpoint2) {
+  form p {
+    label {
+      padding-right: 1em;
+    }
+    input,
+    select,
+    textarea {
+      float: right;
+      width: 70%;
+    }
+  }
+
+  .option {
+    float: left;
+    width: 35%;
+  }
+  .option + .option {
+    margin-left: 15%;
+  }
+}
+
+@media screen and (max-width: $breakpoint2) {
+  .option {
+    overflow: hidden;
+  }
+
+  form p {
+    label,
+    input,
+    textarea {
+      float: left;
+      clear: both;
+      width: 100%;
+    }
+  }
+}
+
+// ---------
+// Embargoes
+// ---------
+
+.embargo-notice {
+  padding: 1em;
+  text-decoration: underline;
+}
+
+.embargo-remove {
+  margin-top: 3em;
+  overflow: hidden;
+
+  form {
+    padding-bottom: 1em;
+  }
+}
+
+// ------
+// Footer
+// ------
+footer {
+  padding: 1em;
+  overflow: hidden;
+  min-height: 8em;
+
+  font: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+  color: white;
+  background-color: $bg_color;
+
+  ul {
+    @include inline("• ", 4px);
+  }
+
+  a, a:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+.meta-adrl {
+  padding-bottom: 1em;
+}
+.copyright {
+  font-size: 82.5%;
+}
+
+.version {
+  font-size: 82.5%;
+}
+
+.ucsb-small {
+  float: left;
+  clear: right;
+  padding: .5em 1em 0 0;
+}
+
+@media screen and (min-width: $breakpoint3) {
+  footer {
+    position: relative;
+  }
+  .meta-adrl {
+    float: left;
+    max-width: 50%;
+  }
+  .meta-ucsb {
+    min-width: 20em;
+    position: absolute;
+    right: 0;
+  }
+}
+
+.document-thumbnail img {
+  float: right;
+  max-height: 100px;
+  margin-top: 0;
+}
+
+select.search_field.form-control {
+	width: 19%;
+}
+
+table#downloads {
+  &.table-bordered {
+    > thead > tr > th, > tbody > tr > td {
+      border-left: 0;
+      border-right: 0;
+    }
+  }
+
+  thead {
+    background-color: #EEE;
+  }
+
+  .access-row {
+    color: #FFF;
+  }
+  .access-row.denied {
+    background-color: #9E280E;
+  }
+
+  .access-row.allowed {
+    background-color: #41A317;
+  }
+}
+
+// TODO: use .static instead (see below)
+#contact-us-page {
+  width: 80%;
+  margin-left: 10%;
+
+  .form-actions {
+    margin-top: 1em;
+  }
+
+  label { font-weight: normal; }
+
+  form {
+    margin: 1.5em 0;
+
+    .row {
+      margin-bottom: 1em;
+    }
+  }
+}
+
+// ----------------
+//   Static Pages
+// ----------------
+.static {
+  padding: 0 2%;
+}
+
+// -------------
+//   Help Page
+// -------------
+.question {
+  font-size: 114.3%;
+}
+
+// ----------
+// Blacklight
+// ----------
+
+/* image thumbnails in search results */
+.document-thumbnail img {
+  width: 100px;
+}
+
+.document-media img {
+  width: 200px;
+  float: right;
+}
+
+// override blacklight-gallery
+// JIRA: DIGREPO-807
+#documents .grid .document .thumbnail {
+  border: 0;
+  max-height: 100px;
+  max-width: 100px;
+  position: unset;
+  width: unset;
+
+  a > img {
+    height: auto;
+    left: 0;
+    position: unset;
+    top: 0;
+    width: 100px;
+  }
+}
+
+#search-navbar .input-group-addon.for-search-field {
+  background-color: inherit;
+}
+
+// JIRA: DIGREPO-472
+.panel-body ul {
+  margin-bottom: 0;
+}
+.show-tools .panel-body {
+  padding: 5px 10px 20px 10px;
+  li + li {
+    margin-top: 1em;
+  }
+}
+
+.twitter-typeahead {
+  float: none;
+  z-index: inherit;
+}
+
+nav.navbar {
+  background: transparent image_url($bg_image) repeat;
+  padding: 1em;
+  color: white;
+}
+
+.navbar-logo {
+  float: left;
+
+  span {
+    @include hide;
+  }
+}
+@media screen and (max-width: $breakpoint2) {
+  .navbar-logo {
+    clear: right;
+    padding-bottom: 0.5em;
+  }
+}
+@media screen and (max-width: $breakpoint4) {
+  .navbar-logo img {
+    width: 100%;
+  }
+}
+
+// FIXME: less specificity
+.input-group {
+  .form-control {
+    &.tt-hint, &.tt-input {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+  }
+  .tt-hint {
+    background: white;
+    &.loading {
+      background: url("/assets/ajax-loader.gif") no-repeat right center;
+    }
+  }
+}
+
+.controlled_vocabulary,
+.controlled_vocabulary_select,
+.relator {
+  @extend .multi_value;
+}
+
+.multi_value_readonly {
+  @extend .multi_value;
+  .listing > li {
+    list-style-type: none;
+  }
+}
+
+// Override multi_value from hydra-editor:
+.multi_value {
+  .btn.remove {
+    color: #fff;
+  }
+
+  .btn.remove, .btn.add {
+    text-decoration: none;
+    width: 6em;
+  }
+
+  .btn.add {
+    padding: 6px 12px;
+  }
+
+}
+
+select, input {
+  &.form-control {
+    max-width: 40em;
+  }
+}
+
+.debug {
+	border: 1px dashed red;
+}
+
+// FIXME: less specificity
+li.time-span.input-group {
+  margin-top: 2em;
+}
+
+label.remove_time_span {
+  margin-left: 1em;
+}
+
+// FIXME: less specificity
+.date-editor {
+  .form-group div ul.listing li {
+    list-style-type: none;
+  }
+}
+
+// FIXME: less specificity
+.contributor-editor {
+  .new {
+    .role{
+      @extend .col-md-4;
+    }
+    .vocabulary {
+      @extend .col-md-3;
+    }
+    .text {
+      @extend .col-md-5;
+    }
+  }
+  .existing {
+    .role {
+      @extend .col-md-3;
+      .predicate {
+        height: 34px;
+        padding: 6px 12px;
+        font-weight: bold;
+        display: inline-block;
+      }
+    }
+    .text {
+      @extend .col-md-9;
+    }
+  }
+}
+
+.blacklight-catalog-show {
+  dl {
+    padding-top: 1em;
+    clear: both;
+ }
+}
+
+.blacklight-collections-show {
+  h1 {
+    margin-top: $top_margin;
+  }
+
+  .collection-search-form {
+    float: right;
+    margin-top: $top_margin + 5px;
+  }
+}
+
+.collection-icon {
+  font-size: 9vw;
+  color: $primary_link_color;
+  padding: .125em 0;
+}
+
+.collection-representative {
+  margin: 2em 0;
+}
+
+.search-results-list li + li {
+  margin-top: 2em;
+}
+
+.documentHeader {
+  clear: both;
+}
+
+// Ridiculous specificity to override Blacklight
+#documents .documentHeader h3.document-title-heading {
+  width: 75%;
+  font-size: 100%;
+  margin: 0;
+  display: inline-block;
+}
+
+.index-document-functions {
+  float: right;
+  overflow: hidden;
+  width: 100%;
+
+  .checkbox {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+    padding: 5px;
+    text-align: center;
+  }
+}
+@media screen and (min-width: $breakpoint3) {
+  .documentHeader {
+    padding-bottom: 1em;
+  }
+  .document-metadata {
+    padding-top: 1em;
+  }
+
+  .index-document-functions {
+    max-width: 20%;
+  }
+}
+
+.thumbnail .index-document-functions {
+  max-width: inherit;
+  position: inherit;
+  right: inherit;
+}
+
+.icon {
+  height: 32px;
+  padding: 2px;
+  width: 32px;
+}
+
+// --------------
+// Thumbnail view
+// --------------
+
+// DIGREPO-481
+.thumbnail {
+  dl {
+    @include hide;
+  }
+
+  .index_title {
+    padding: 0 1em .5em 1em;
+  }
+}
+
+// ---------
+// Deep Zoom
+// ---------
+.zoom {
+  margin-bottom: 5em;
+}
+
+// -----------
+// Breadcrumbs
+// -----------
+
+.adrl-breadcrumb {
+  // We can't use the `inline' mixin since these are nested lists
+  &,
+  & * {
+    display: inline;
+    margin: 0;
+    padding-left: 0;
+  }
+  li li {
+    padding-left: .25em;
+    &::before {
+      font-style: normal;
+      content: '>';
+      padding-right: .25em;
+    }
+  }
+}
+
+// ---------
+// Map Trays
+// ---------
+
+.map-tray {
+  clear: both;
+
+  ul {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    overflow-x: auto;
+    padding-left: 0;
+  }
+
+  li {
+    display: inline;
+    // this is so we can absolutely position the .tray-label below
+    position: relative;
+
+    img {
+      min-width: 100px;
+    }
+  }
+
+  li + li {
+    margin-left: .5em;
+  }
+}
+
+img.self-map {
+  border: .125em solid rgba(0, 0, 0, 0.6);
+}
+
+.tray-label {
+  background: rgb(0,0,0);
+  background: rgba(0, 0, 0, 0.6);
+  bottom: 0;
+  color: white;
+  font-size: 80%;
+  left: 0;
+  line-height: 1em;
+  padding: .125em;
+  position: absolute;
+  white-space: normal;
+  width: 100px;
+  z-index: 2;
+}
+
+// --------
+// Carousel
+// --------
+
+// FIXME: use standard colors
+
+/*
+This is the visible area of you carousel.
+Set a width here to define how much items are visible.
+The width can be either fixed in px or flexible in %.
+Position must be relative!
+*/
+.jcarousel {
+    position: relative;
+    overflow: hidden;
+}
+
+/*
+This is the container of the carousel items.
+You must ensure that the position is relative or absolute and
+that the width is big enough to contain all items.
+*/
+.jcarousel ul {
+    width: 20000em;
+    position: relative;
+
+    /* Optional, required in this case since it's a <ul> element */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+These are the item elements. jCarousel works best, if the items
+have a fixed width and height (but it's not required).
+*/
+.jcarousel li {
+    /* Required only for block elements like <li>'s */
+    float: left;
+}
+
+/** Carousel Controls **/
+
+.jcarousel-control-prev,
+.jcarousel-control-next {
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    background: #4E443C;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 0 1px #000;
+    font: 24px/27px Arial, sans-serif;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    -webkit-box-shadow: 0 0 4px #F0EFE7;
+    -moz-box-shadow: 0 0 4px #F0EFE7;
+    box-shadow: 0 0 4px #F0EFE7;
+}
+
+@media (max-width: $breakpoint4) {
+    .jcarousel-control-prev,
+    .jcarousel-control-next {
+        margin-top: -10px;
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+        font: 16px/18px Arial, sans-serif;
+    }
+}
+
+.jcarousel-control-prev {
+    left: 15px;
+}
+
+.jcarousel-control-next {
+    right: 15px;
+}
+
+.jcarousel-control-prev:hover span,
+.jcarousel-control-next:hover span {
+    display: block;
+}
+
+.jcarousel-control-prev.inactive,
+.jcarousel-control-next.inactive {
+    opacity: .25;
+    cursor: default;
+}
+
+/** Carousel Pagination **/
+
+.jcarousel-pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+
+    margin: 0;
+    margin-left: -22px;
+}
+
+@media (max-width: $breakpoint3) {
+    .jcarousel-pagination {
+        bottom: -35px;
+    }
+}
+
+.jcarousel-pagination a {
+    text-decoration: none;
+    display: inline-block;
+
+    font-size: 11px;
+    height: 10px;
+    width: 10px;
+    line-height: 10px;
+
+    background: #fff;
+    color: #4E443C;
+    border-radius: 10px;
+    text-indent: -9999px;
+
+    margin-right: 7px;
+
+    -webkit-box-shadow: 0 0 2px #4E443C;
+    -moz-box-shadow: 0 0 2px #4E443C;
+    box-shadow: 0 0 2px #4E443C;
+}
+
+.jcarousel-pagination a.active {
+    background: #4E443C;
+    color: #fff;
+    opacity: 1;
+
+    -webkit-box-shadow: 0 0 2px #F0EFE7;
+    -moz-box-shadow: 0 0 2px #F0EFE7;
+    box-shadow: 0 0 2px #F0EFE7;
+}
+.twitter-typeahead {
+  width: 100%;
+}
+
+.twitter-typeahead + input + input + .field-controls > button {
+  margin-top: -5px;
+}
+
+.typeahead {
+  background-color: #fff;
+}
+
+.typeahead:focus {
+  border: 2px solid #0097cf;
+}
+
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+  width: 422px;
+  margin-top: 12px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
