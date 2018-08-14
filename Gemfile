@@ -6,12 +6,12 @@ git_source(:github) do |repo_name|
 end
 
 group :production do
-  gem "pg", "~> 0.18.4"
+  gem 'pg', '~> 0.18.4'
 end
 
 gem 'blacklight', '>= 6.1'
 gem 'blacklight-marc', '~> 6.1'
-gem 'coffee-rails', '~> 4.2'
+gem 'coffee-rails'
 gem 'devise'
 gem 'devise-guests', '~> 0.6'
 gem 'jbuilder', '~> 2.5'
@@ -20,6 +20,7 @@ gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.6'
 gem 'rsolr', '>= 1.0'
 gem 'sass-rails', '~> 5.0'
+gem 'therubyracer', platforms: :ruby
 gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
