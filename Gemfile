@@ -5,6 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+group :production do
+  gem "pg", "~> 0.18.4"
+end
+
 gem 'blacklight', '>= 6.1'
 gem 'blacklight-marc', '~> 6.1'
 gem 'coffee-rails', '~> 4.2'
@@ -16,7 +20,6 @@ gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.6'
 gem 'rsolr', '>= 1.0'
 gem 'sass-rails', '~> 5.0'
-gem 'sqlite3'
 gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
@@ -33,4 +36,5 @@ group :development, :test do
   gem 'pry-doc'
   gem 'selenium-webdriver'
   gem 'solr_wrapper', '>= 0.3'
+  gem 'sqlite3'
 end
