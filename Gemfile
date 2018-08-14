@@ -21,6 +21,7 @@ gem 'rails', '~> 5.1.6'
 gem 'rsolr', '>= 1.0'
 gem 'sass-rails', '~> 5.0'
 gem 'therubyracer', platforms: :ruby
+gem 'traject'
 gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
